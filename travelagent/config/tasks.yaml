@@ -1,0 +1,85 @@
+clarify_trip_requirements:
+  description: >
+    Review and clarify the user's travel requirements: {origin}, {destination}, {start_date}, {end_date}, {travelers}, {budget}, {interests}, and {preferences}.
+    Normalize any missing or unclear information and create a structured TripSpec.
+    Ensure all constraints are clearly defined and validate that dates, budget, and traveler counts are realistic.
+    Stay strictly within the user's stated parameters and ask for clarification if anything is ambiguous.
+  expected_output: >
+    A structured TripSpec containing: confirmed origin and destination, validated dates, number of travelers, 
+    total budget with per-person breakdown, list of interests, special preferences, and any constraints.
+    Include budget allocation suggestions across categories (flights, accommodation, activities, transfers).
+  agent: clarifier_agent
+
+research_flights:
+  description: >
+    Research flight options from {origin} to {destination} for {travelers} travelers, departing {start_date} and returning {end_date}.
+    Find viable routes, airlines, layover options, and typical price ranges within the allocated flight budget.
+    Include both direct and connecting flight options, seasonal pricing considerations, and booking recommendations.
+    Provide actionable "how to book" links and identify the best value options that balance cost and convenience.
+  expected_output: >
+    A comprehensive flight research report with 3-5 recommended flight options including: airline names, 
+    route details, layover information, price ranges per person, booking links, and pros/cons for each option.
+    Include seasonal pricing notes and best booking timing recommendations.
+  agent: flight_research_agent
+
+research_accommodations:
+  description: >
+    Research and shortlist hotels, resorts, and accommodations in {destination} for {travelers} travelers from {start_date} to {end_date}.
+    Focus on options that match the budget allocation for stays, desired amenities from {preferences}, and family-friendliness if applicable.
+    Consider location relative to planned activities, transportation access, and guest reviews.
+    Provide detailed comparisons and booking options with current pricing.
+  expected_output: >
+    A curated list of 4-6 accommodation options with detailed comparisons including: property names, 
+    location details, amenities, price ranges per night, total stay cost, booking links, guest ratings, 
+    and specific reasons why each option matches the traveler's preferences and budget.
+  agent: stay_research_agent
+
+plan_daily_activities:
+  description: >
+    Create a day-by-day activity plan for {destination} from {start_date} to {end_date} aligned with interests: {interests}.
+    Consider local seasonality, weather conditions, cultural events, and logistical feasibility.
+    Balance must-see attractions with unique experiences, ensuring activities are bookable and within budget.
+    Include timing recommendations, pricing information, and booking details for each suggested activity.
+  expected_output: >
+    A detailed day-by-day itinerary with morning, afternoon, and evening activity suggestions for each day.
+    Include activity names, descriptions, estimated duration, pricing, booking information, and timing recommendations.
+    Provide alternative options for weather-dependent activities and include local cultural considerations.
+  agent: activity_planner_agent
+
+coordinate_logistics:
+  description: >
+    Plan all transportation and logistics for the trip including airport transfers, inter-destination transport, and local transportation options.
+    Research {destination} transportation networks, transfer options from airports to accommodations, and any special transportation needs.
+    Provide timing recommendations, cost estimates, and booking information for all transportation segments.
+    Consider comfort, safety, and budget constraints while ensuring smooth travel flow.
+  expected_output: >
+    A comprehensive logistics plan covering: airport transfer options with pricing and booking links, 
+    local transportation recommendations, inter-destination transport if applicable, timing guidelines for each segment,
+    and backup transportation options. Include total transportation budget estimate and cost-saving tips.
+  agent: logistics_agent
+
+estimate_total_budget:
+  description: >
+    Aggregate all cost estimates from flights, accommodations, activities, and transportation to create a comprehensive budget analysis.
+    Compare total estimated costs against the user's stated budget of {budget} and identify areas for optimization.
+    If over budget, provide 3 specific cost-reduction strategies with quantified savings potential.
+    Create budget breakdowns by category and per-person costs.
+  expected_output: >
+    A detailed budget analysis with cost breakdowns by category (flights, accommodation, activities, transportation, buffer).
+    Show minimum, maximum, and recommended budget estimates with comparison to user's {budget}.
+    If over budget, provide 3 optimization strategies with specific savings amounts and trade-off explanations.
+    Include per-person and per-day cost breakdowns.
+  agent: budget_estimator_agent
+
+compile_final_itinerary:
+  description: >
+    Synthesize all research and planning into a comprehensive final travel itinerary in multiple formats.
+    Include all booking links, source citations, timing details, budget summaries, and actionable next steps.
+    Create a complete travel document with day-by-day plans, contact information, backup options, and emergency details.
+    Ensure all recommendations are properly sourced and include a booking checklist for the traveler.
+  expected_output: >
+    A complete travel itinerary document including: executive summary, detailed day-by-day schedule, 
+    comprehensive budget breakdown, complete booking checklist with links, source citations for all recommendations,
+    emergency contact information, and backup options. Format as structured markdown ready for PDF conversion.
+    Include a separate booking action list with priorities and deadlines.
+  agent: synthesis_agent
