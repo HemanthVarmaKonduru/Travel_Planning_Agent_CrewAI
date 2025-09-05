@@ -30,27 +30,34 @@ Compile the final itinerary.
 
 **Custom Tools**: Agents use custom-built tools to interact with real-world data sources. Examples include FlightSearchTool, HotelSearchTool, ActivitySearchTool, and GeneralSearchTool to perform targeted searches.
 
-📁 **Project Structure**
-TravelPlanningAgent_CrewAI/
-├── travelagent/
-│   ├── src/
-│   │   ├── travelagent/
-│   │   │   ├── main.py                     # Entry point for the application
-│   │   │   ├── crew.py                     # Crew and agent definitions
-│   │   │   ├── config/                     # Configuration files
-│   │   │   │   ├── agents.yaml             # Agent configurations
-│   │   │   │   ├── tasks.yaml              # Task configurations
-│   │   │   ├── tools/                      # Custom tools for agents
-│   │   │   │   ├── __init__.py
-│   │   │   │   ├── custom_tool.py
-│   │   │   │   ├── flight_search_tool.py
-│   │   │   │   ├── hotel_search_tool.py
-│   │   │   │   ├── activity_search_tool.py
-│   │   │   │   └── general_search_tool.py
-├── TravelAgentEnv/                         # Virtual environment
-├── .env.example                            # Example .env file
-├── requirements.txt
-└── README.md
+<p class="demoTitle">&nbsp;</p>
+<p>&nbsp;TravelPlanningAgent_CrewAI/</p>
+<div>
+<div>├── Travel_Planning_Agent_CrewAI/</div>
+<div>│ ├── travelagent/</div>
+<div>│ │ ├── knowledge/</div>
+<div>│ │ │ └── user_preference.txt # User preference storage</div>
+<div>│ │ ├── src/</div>
+<div>│ │ │ ├── requirements.txt # Python dependencies</div>
+<div>│ │ │ ├── travel_itinerary.md # Generated itinerary output</div>
+<div>│ │ │ └── travelagent/</div>
+<div>│ │ │ ├── __init__.py</div>
+<div>│ │ │ ├── main.py # Application entry point</div>
+<div>│ │ │ ├── crew.py # Crew and agent definitions</div>
+<div>│ │ │ ├── config/</div>
+<div>│ │ │ │ ├── agents.yaml # Agent configurations</div>
+<div>│ │ │ │ └── tasks.yaml # Task definitions</div>
+<div>│ │ │ └── tools/</div>
+<div>│ │ │ ├── __init__.py</div>
+<div>│ │ │ └── custom_tool.py # Custom search tools</div>
+<div>│ │ ├── tests/ # Test files</div>
+<div>│ │ ├── pyproject.toml # Project configuration</div>
+<div>│ │ └── README.md # This file</div>
+<div>│ └── TravelAgentEnv/ # Virtual environment</div>
+<div>```</div>
+</div>
+
+
 
 
 🔑 **Environment Variables**
