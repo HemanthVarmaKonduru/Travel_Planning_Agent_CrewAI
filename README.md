@@ -5,6 +5,10 @@ This project features a Travel Planning Agent built with the CrewAI framework. I
 💡 Project Explanation
 The core of this project is its modular design. By breaking down the complex task of travel planning into specialized roles, the system can handle detailed requests with greater accuracy and efficiency.
 
+<img width="1779" height="1278" alt="Image" src="https://github.com/user-attachments/assets/3792183a-8632-4a95-bcd9-50f2e3535a53" />
+
+
+
 **Key Components**
 Agents: Each agent is a specialized AI with a clearly defined purpose:
 Clarifier Agent: Ensures all user inputs are precise and complete.
