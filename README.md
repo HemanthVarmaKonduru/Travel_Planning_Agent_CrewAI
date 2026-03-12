@@ -1,178 +1,133 @@
-# ✈️ Travel Planning Agent with CrewAI: A Comprehensive Guide
+# ✈️ AI Travel Planning Agent — CrewAI Multi-Agent System
 
-This document provides a detailed overview of the Travel Planning Agent project, built using CrewAI. It outlines the project structure, key components, and their functionalities, offering a comprehensive guide to understanding and utilizing the agent for automated travel planning.
+An intelligent travel planning system that orchestrates **7 specialized AI agents** to collaboratively build comprehensive, personalized travel itineraries — from flights and hotels to daily activities and budget optimization.
 
-## 📁 Project Structure
+Built with [CrewAI](https://crewai.com), [OpenAI](https://openai.com), and [Serper](https://serper.dev) for real-time web search.
 
-The project is organized into several key directories and files:
+## 🎯 What It Does
+
+Give it a destination, dates, and budget — and the agents handle everything:
+
+| Agent | Role |
+|-------|------|
+| **Clarifier** | Validates and structures your travel requirements |
+| **Flight Researcher** | Finds optimal routes, airlines, and booking links |
+| **Stay Researcher** | Compares hotels/resorts matching your preferences |
+| **Activity Planner** | Curates day-by-day experiences aligned with your interests |
+| **Logistics Coordinator** | Plans transfers, local transport, and timing |
+| **Budget Estimator** | Tracks spending and suggests cost optimizations |
+| **Synthesis Agent** | Compiles everything into a polished Markdown itinerary |
+
+## 🏗️ Architecture
 
 ```
-TravelPlanningAgent_CrewAI/                     # The root directory of the project
-├── Travel_Planning_Agent_CrewAI/               # Contains the core application logic
-│   ├── travelagent/                            # The main application directory
-│   │   ├── knowledge/                          # Stores persistent knowledge
-│   │   │   └── user_preference.txt             # Stores user preferences for personalized travel planning
-│   │   ├── src/                                # Contains the source code
-│   │   │   ├── requirements.txt                # Lists the Python dependencies required to run the project
-│   │   │   ├── travel_itinerary.md             # The generated travel itinerary output file
-│   │   │   └── travelagent/                    # Contains the Python modules
-│   │   │       ├── __init__.py                 # Initializes the travelagent package
-│   │   │       ├── main.py                     # The application entry point
-│   │   │       ├── crew.py                     # Defines the crew and agent configurations
-│   │   │       ├── config/                     # Contains configuration files
-│   │   │       │   ├── agents.yaml             # Defines the configurations for each agent
-│   │   │       │   └── tasks.yaml              # Defines the tasks to be performed by agents
-│   │   │       └── tools/                      # Contains custom tools
-│   │   │           ├── __init__.py             # Initializes the tools package
-│   │   │           └── custom_tool.py          # Implements custom search tools
-│   │   ├── tests/                              # Contains test files for validating functionality
-│   │   ├── pyproject.toml                      # Specifies project metadata and dependencies
-│   │   └── README.md                           # Project description and usage instructions
-│   └── TravelAgentEnv/                         # Virtual environment for the project
+User Input → Clarifier Agent → Flight Agent → Stay Agent → Activity Agent
+                                                                    ↓
+              Final Itinerary ← Synthesis Agent ← Budget Agent ← Logistics Agent
 ```
 
-## 🔧 Key Components
+All agents execute sequentially, each building on previous outputs. The system uses Serper API for real-time web searches to ground recommendations in current data.
 
-### 1. **user_preference.txt**
-
-This file stores user-specific travel preferences, allowing the agent to personalize the travel itinerary based on individual needs and desires. Examples of preferences include:
-
-- **Destination preferences** (e.g., specific cities, countries, or types of locations like beaches or mountains)
-- **Budget constraints**
-- **Travel dates and duration**
-- **Preferred mode of transportation** (e.g., flights, trains, cars)
-- **Accommodation preferences** (e.g., hotels, hostels, Airbnb)
-- **Activity preferences** (e.g., sightseeing, adventure, relaxation)
-- **Dietary restrictions or allergies**
-- **Interests** (e.g., history, art, music)
-
-### 2. **requirements.txt**
-
-This file lists all the Python packages required to run the Travel Planning Agent. Using a requirements.txt file ensures that the project can be easily set up and run on different machines by installing the specified dependencies. Example dependencies include:
-
-- **crewai**: The core CrewAI library for building autonomous agents
-- **openai**: The OpenAI Python library for interacting with OpenAI models
-- **requests**: A library for making HTTP requests to external APIs
-- **beautifulsoup4**: A library for parsing HTML and XML documents
-- **python-dotenv**: A library for loading environment variables from a .env file
-
-### 3. **travel_itinerary.md**
-
-This file is the output of the Travel Planning Agent. It contains the generated travel itinerary in Markdown format, making it easily readable and editable. The itinerary typically includes:
-
-- **Destination(s)**
-- **Travel dates**
-- **Transportation details** (e.g., flight numbers, train schedules)
-- **Accommodation details** (e.g., hotel names, addresses, booking confirmations)
-- **Planned activities and attractions**
-- **Estimated costs**
-- **Useful links and resources**
-
-### 4. **main.py**
-
-This is the main entry point of the application. It orchestrates the entire travel planning process by performing the following actions:
-
-- **Loads configurations** from `agents.yaml` and `tasks.yaml`
-- **Initializes the CrewAI agents** based on the configurations
-- **Assigns tasks** to the agents
-- **Runs the crew** to execute the tasks
-- **Collects the results** from the agents
-- **Formats the results** into a travel itinerary
-- **Writes the itinerary** to `travel_itinerary.md`
-
-### 5. **crew.py**
-
-This file defines the crew and agent configurations. It specifies the roles, goals, and tools of each agent in the crew. For example, a crew might consist of the following agents:
-
-- **Travel Researcher**: Responsible for researching potential destinations, attractions, and activities
-- **Flight Booker**: Responsible for finding and booking flights
-- **Accommodation Booker**: Responsible for finding and booking hotels or other accommodations
-- **Itinerary Planner**: Responsible for creating a detailed travel itinerary based on the research and bookings
-
-### 6. **agents.yaml**
-
-This file contains the configuration details for each agent. It defines the agent's:
-
-- **Role**: A descriptive name for the agent's function (e.g., "Travel Researcher")
-- **Goal**: The agent's objective (e.g., "Research potential destinations based on user preferences")
-- **Backstory**: A brief description of the agent's background and expertise
-- **Tools**: A list of tools that the agent can use to accomplish its tasks
-- **Memory**: Whether the agent should retain information from previous interactions
-- **LLM (Language Model)**: Specifies the language model to be used by the agent (e.g., GPT-3.5, GPT-4)
-
-### 7. **tasks.yaml**
-
-This file defines the tasks to be performed by the agents. It specifies the:
-
-- **Description**: A detailed description of the task
-- **Agent**: The agent assigned to perform the task
-- **Context**: Any relevant context or information needed to complete the task
-
-### 8. **custom_tool.py**
-
-This file implements custom search tools for retrieving travel-related information. These tools can be used to access external APIs or websites to gather data on flights, hotels, attractions, and other travel-related services. Examples of custom tools include:
-
-- **Flight Search Tool**: Uses an API to search for flights based on origin, destination, dates, and budget
-- **Hotel Search Tool**: Uses an API to search for hotels based on location, dates, and budget
-- **Attraction Search Tool**: Uses an API or web scraping to find information about attractions in a specific location
-
-## 🔄 Workflow
-
-The Travel Planning Agent operates as follows:
-
-1. **Configuration Loading**: The `main.py` script loads the agent and task configurations from `agents.yaml` and `tasks.yaml`
-
-2. **Agent Initialization**: The script initializes the CrewAI agents based on the configurations
-
-3. **Task Assignment**: The script assigns tasks to the agents
-
-4. **Task Execution**: The CrewAI framework orchestrates the execution of the tasks by the agents
-
-5. **Information Gathering**: Each agent uses its assigned tools to gather information and perform its assigned tasks
-
-6. **Agent Collaboration**: The agents communicate and collaborate to achieve the overall goal of creating a travel itinerary
-
-7. **Result Collection**: The `main.py` script collects the results from the agents and formats them into a travel itinerary
-
-8. **Output Generation**: The script writes the itinerary to the `travel_itinerary.md` file
-
-## 🚀 Usage
-
-To use the Travel Planning Agent:
+## 🚀 Quick Start
 
 ### Prerequisites
-- Python 3.8 or higher
-- pip package manager
+- Python 3.10+
+- OpenAI API key ([get one](https://platform.openai.com/api-keys))
+- Serper API key ([get one](https://serper.dev))
 
-### Installation Steps
+### Setup
 
-1. **Install Dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
+```bash
+# Clone the repo
+git clone https://github.com/hemanthvarmakonduru/Travel_Planning_Agent_CrewAI.git
+cd Travel_Planning_Agent_CrewAI
 
-2. **Configure Agents and Tasks**
-   - Configure the agents and tasks in `agents.yaml` and `tasks.yaml` according to your needs
+# Create virtual environment
+python -m venv .venv
+source .venv/bin/activate  # Windows: .venv\Scripts\activate
 
-3. **Run the Application**
-   ```bash
-   python main.py
-   ```
+# Install dependencies
+pip install -r requirements.txt
 
-4. **View Results**
-   - The generated travel itinerary will be saved in `travel_itinerary.md`
+# Configure API keys
+cp .env.example .env
+# Edit .env with your API keys
+```
 
-## 📋 Summary
+### Run via CLI
 
-This comprehensive guide provides a detailed overview of the Travel Planning Agent project, its structure, key components, and functionalities. By understanding these elements, users can effectively utilize and customize the agent for automated travel planning.
+```bash
+# Quick run with default inputs
+python -m travelagent.main
 
-### Key Benefits
-- **Automated Planning**: Streamlines the entire travel planning process
-- **Personalization**: Adapts to individual user preferences and requirements
-- **Comprehensive Coverage**: Handles all aspects from flights to activities
-- **Extensible Design**: Easy to add new agents and customize functionality
-- **Professional Output**: Generates well-formatted, detailed itineraries
+# Custom trip
+python -m travelagent.main run \
+  --origin "New York" \
+  --destination "Tokyo" \
+  --start-date 2025-04-01 \
+  --end-date 2025-04-10 \
+  --travelers 2 \
+  --budget 8000 \
+  --interests "temples, sushi, anime, cherry blossoms" \
+  --preferences "mid-range hotels, public transit"
+```
 
----
+### Run via Web UI (Streamlit)
 
-*Built with ❤️ using CrewAI Framework*
+```bash
+streamlit run streamlit_app.py
+```
+
+Opens an interactive web interface where you can fill in trip details and get your itinerary with a single click.
+
+## 📂 Project Structure
+
+```
+├── travelagent/
+│   ├── main.py              # CLI entry point with argument parsing
+│   ├── crew.py              # CrewAI agent & task definitions
+│   ├── config/
+│   │   ├── agents.yaml      # Agent roles, goals, and backstories
+│   │   └── tasks.yaml       # Task descriptions and expected outputs
+│   └── tools/
+│       └── custom_tool.py   # Serper-powered search tools
+├── tests/
+│   ├── test_tools.py        # Tool unit tests with mocked APIs
+│   └── test_main.py         # Input validation tests
+├── streamlit_app.py          # Web UI
+├── .github/workflows/ci.yml  # CI pipeline
+├── .env.example              # Environment template
+├── requirements.txt
+└── LICENSE
+```
+
+## 🧪 Testing
+
+```bash
+pytest tests/ -v
+```
+
+## 📄 Sample Output
+
+The agent generates a detailed Markdown itinerary including:
+- Flight options with booking links and price comparisons
+- Hotel recommendations with amenities and ratings
+- Day-by-day activity schedule with timing and costs
+- Transportation logistics and transfer details
+- Complete budget breakdown with optimization tips
+- Booking checklist with priority deadlines
+
+## 🛠️ Tech Stack
+
+| Component | Technology |
+|-----------|-----------|
+| Agent Framework | CrewAI |
+| LLM | OpenAI GPT-4o |
+| Web Search | Serper API |
+| Web UI | Streamlit |
+| Testing | pytest |
+| CI/CD | GitHub Actions |
+
+## 📜 License
+
+MIT License — see [LICENSE](LICENSE) for details.
